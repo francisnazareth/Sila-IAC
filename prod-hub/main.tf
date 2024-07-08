@@ -14,6 +14,6 @@ module "log-analytics-workspace" {
     location = var.location
     regionprefix = var.regionprefix
     tags = var.tags
-    law-rg-name = module.rg.output.monitoring_rg_name
+    law-rg-name = module.rg.monitoring_rg_name
 }
 
