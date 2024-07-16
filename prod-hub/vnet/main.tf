@@ -4,9 +4,7 @@ resource "azurerm_virtual_network" "hub-vnet" {
   resource_group_name = var.rg-name
   address_space       = [var.hub-vnet-address-space]
 
-  tags = {
-    environment = "Hub"
-  }
+  tags     = var.tags
 }
 
 resource "azurerm_subnet" "hub-gateway-subnet" {
