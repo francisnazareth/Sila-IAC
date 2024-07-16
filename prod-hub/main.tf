@@ -34,3 +34,11 @@ module "hub-vnet" {
     mgmt-subnet-2-address-space      = var.mgmt-subnet-2-address-space
     shared-svcs-snet-address-space   = var.shared-svcs-snet-address-space
 }
+
+module "bastion" {
+    source               = "./bastion"
+    rg-name              = module.rg.network_rg_name
+    rg-location          = var.location
+    bastion-snet-id      = module.hub-vnet.bastion-snet-id
+    depends_on           = [module.hub-vnet]
+}
