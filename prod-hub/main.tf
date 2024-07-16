@@ -18,6 +18,12 @@ module "log-analytics-workspace" {
 }
 
 module "hub-vnet" {
+  customerprefix = var.customerprefix
+  environment = var.environment
+  location = var.location
+    regionprefix = var.regionprefix
+    tags = var.tags
+
     source               = "./vnet"
     rg-name              = module.rg.network_rg_name
     rg-location          = var.location
