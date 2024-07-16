@@ -33,5 +33,4 @@ module "hub-vnet" {
     mgmt-subnet-1-address-space      = var.mgmt-subnet-1-address-space
     mgmt-subnet-2-address-space      = var.mgmt-subnet-2-address-space
     shared-svcs-snet-address-space   = var.shared-svcs-snet-address-space
-    customer-name        = var.customer-name
 }
