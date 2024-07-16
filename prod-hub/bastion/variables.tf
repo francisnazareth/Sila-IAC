@@ -6,10 +6,6 @@ variable customerprefix {
   type = string
 }
 
-variable regionprefix {
-  type = string
-}
-
 variable location {
   type = string
 }
