@@ -17,7 +17,7 @@ resource "azurerm_bastion_host" "bastion-svc" {
   ip_connect_enabled     = false
   shareable_link_enabled = false
   tunneling_enabled      = true
-  zones:   ['1', '2', '3']
+  zones:   ["1", "2", "3"]
   ip_configuration {
     name                 = "configuration"
     subnet_id            = var.bastion-subnet-id
