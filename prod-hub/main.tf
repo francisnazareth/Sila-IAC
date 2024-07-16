@@ -19,7 +19,7 @@ module "log-analytics-workspace" {
 
 module "hub-vnet" {
     source               = "./vnet"
-    rg-name              = module.rg.rg-name
+    rg-name              = module.rg.network_rg_name
     rg-location          = var.location
     hub-vnet-address-space           = var.hub-vnet-address-space
     firewall-subnet-address-space    = var.firewall-subnet-address-space
