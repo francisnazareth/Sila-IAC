@@ -1,5 +1,5 @@
 resource "azurerm_virtual_network" "hub-vnet" {
-  name                = "vnet-hub-${var.location}-01"
+  name                = "vnet-${var.customerprefix}-hub-${var.location}-01"
   location            = var.location
   resource_group_name = var.rg-name
   address_space       = [var.hub-vnet-address-space]
@@ -29,7 +29,7 @@ resource "azurerm_subnet" "hub-firewall-subnet" {
 }
 
 resource "azurerm_subnet" "hub-appgw-subnet" {
-  name                 = "snet-aag-${var.customerprefix}-hub-01"
+  name                 = "snet-agw-${var.customerprefix}-hub-01"
   resource_group_name  = var.rg-name
   virtual_network_name = azurerm_virtual_network.hub-vnet.name
   address_prefixes     = [var.appgw-subnet-address-space]
@@ -42,8 +42,8 @@ resource "azurerm_subnet" "hub-mgmt-subnet-01" {
   address_prefixes     = [var.mgmt-subnet-1-address-space]
 }
 
-resource "azurerm_subnet" "hub-mgmt-subnet-02" {
-  name                 = "snet-mgmt-${var.customerprefix}-hub-02"
+resource "azurerm_subnet" "hub-pe-subnet" {
+  name                 = "snet-pe-${var.customerprefix}-hub-01"
   resource_group_name  = var.rg-name
   virtual_network_name = azurerm_virtual_network.hub-vnet.name
   address_prefixes     = [var.mgmt-subnet-2-address-space]
