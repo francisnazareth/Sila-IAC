@@ -17,3 +17,11 @@ variable regionprefix {
 variable location {
   type = string
 }
+
+var rg-name {
+  type = string 
+}
+
+var bastion-subnet-id {
+   type = string
+}
