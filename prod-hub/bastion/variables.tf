@@ -14,10 +14,10 @@ variable location {
   type = string
 }
 
-var rg-name {
+variable rg-name {
   type = string 
 }
 
-var bastion-subnet-id {
+variable bastion-subnet-id {
    type = string
 }
