@@ -38,7 +38,9 @@ module "hub-vnet" {
 module "bastion" {
     source               = "./bastion"
     rg-name              = module.rg.network_rg_name
-    rg-location          = var.location
+    location          = var.location
+    tags                 = var.tags 
+    customerprefix       = var.customerprefix
     bastion-snet-id      = module.hub-vnet.bastion-snet-id
     depends_on           = [module.hub-vnet]
 }
