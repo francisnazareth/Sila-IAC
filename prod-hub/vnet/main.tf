@@ -29,28 +29,28 @@ resource "azurerm_subnet" "hub-firewall-subnet" {
 }
 
 resource "azurerm_subnet" "hub-appgw-subnet" {
-  name                 = "snet-aag-${var.customer-name}-hub-01"
+  name                 = "snet-aag-${var.customer-prefix}-hub-01"
   resource_group_name  = var.rg-name
   virtual_network_name = azurerm_virtual_network.hub-vnet.name
   address_prefixes     = [var.appgw-subnet-address-space]
 }
 
 resource "azurerm_subnet" "hub-mgmt-subnet-01" {
-  name                 = "snet-mgmt-${var.customer-name}-hub-01"
+  name                 = "snet-mgmt-${var.customer-prefix}-hub-01"
   resource_group_name  = var.rg-name
   virtual_network_name = azurerm_virtual_network.hub-vnet.name
   address_prefixes     = [var.mgmt-subnet-1-address-space]
 }
 
 resource "azurerm_subnet" "hub-mgmt-subnet-02" {
-  name                 = "snet-mgmt-${var.customer-name}-hub-02"
+  name                 = "snet-mgmt-${var.customer-prefix}-hub-02"
   resource_group_name  = var.rg-name
   virtual_network_name = azurerm_virtual_network.hub-vnet.name
   address_prefixes     = [var.mgmt-subnet-2-address-space]
 }
 
 resource "azurerm_subnet" "hub-sharedsvc-subnet-01" {
-  name                 = "snet-sharedsvc-${var.customer-name}-hub-01"
+  name                 = "snet-sharedsvc-${var.customer-prefix}-hub-01"
   resource_group_name  = var.rg-name
   virtual_network_name = azurerm_virtual_network.hub-vnet.name
   address_prefixes     = [var.shared-svcs-snet-address-space]
