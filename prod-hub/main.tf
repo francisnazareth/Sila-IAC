@@ -41,6 +41,6 @@ module "bastion" {
     location          = var.location
     tags                 = var.tags 
     customerprefix       = var.customerprefix
-    bastion-snet-id      = module.hub-vnet.bastion-snet-id
+    bastion-subnet-id      = module.hub-vnet.bastion-snet-id
     depends_on           = [module.hub-vnet]
 }
