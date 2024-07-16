@@ -1,5 +1,5 @@
 resource "azurerm_public_ip" "bastion-pip" {
-  name                = "pip-bastion"
+  name                = "pip-bastion-${var.customerprefix}-${var.location}-01"
   location            = var.rg-location
   resource_group_name = var.rg-name
   allocation_method   = "Static"
