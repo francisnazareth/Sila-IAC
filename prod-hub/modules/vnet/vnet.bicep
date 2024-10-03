@@ -30,6 +30,7 @@ param f5ExtSubnetAddressPrefix string
 param f5IntSubnetAddressPrefix string
 param f5MgmtSubnetAddressPrefix string
 param f5HASubnetAddressPrefix string
+param adSubnetAddressPrefix string 
 
 resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2022-05-01' = {
   name: vmNSGName
@@ -168,12 +169,21 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
           }
         }
       }
+
       {
         name: sharedServicesSubnetName
         properties: {
           addressPrefix: sharedServicesSubnetAddressPrefix
         }
       }
+
+      {
+        name: 'snet-ad-sila-hub-qc-01'
+        properties: {
+          addressPrefix: adSubnetAddressPrefix
+        }
+      }
+
     ]
 
     enableDdosProtection: ddosProtectionPlanEnabled
@@ -193,6 +203,8 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   resource sharedServicesSubnet 'subnets' existing = {
       name: sharedServicesSubnetName
   }
+
+  
 }
 
 output vnetId string = vnet.id

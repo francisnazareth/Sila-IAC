@@ -89,6 +89,8 @@ param f5IntSubnetAddressPrefix string
 param f5MgmtSubnetAddressPrefix string
 param f5HASubnetAddressPrefix string
 
+param adSubnetAddressPrefix string 
+
 module vnet './modules/vnet/vnet.bicep' = {
   name: 'vnet'
   scope: networkRG
@@ -111,6 +113,8 @@ module vnet './modules/vnet/vnet.bicep' = {
     f5IntSubnetAddressPrefix: f5IntSubnetAddressPrefix
     f5MgmtSubnetAddressPrefix: f5MgmtSubnetAddressPrefix
     f5HASubnetAddressPrefix: f5HASubnetAddressPrefix
+
+    adSubnetAddressPrefix: adSubnetAddressPrefix 
 
     bastionSubnetAddressPrefix: bastionSubnetAddressPrefix
     peSubnetName: peSubnetName
