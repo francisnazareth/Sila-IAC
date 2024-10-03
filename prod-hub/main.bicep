@@ -137,7 +137,7 @@ module logAnalytics './modules/logAnalytics/logAnalytics.bicep' = {
   }
 }
 
-module firewall './modules/firewall/firewall.bicep' = {
+/*module firewall './modules/firewall/firewall.bicep' = {
   name: 'firewall'
   scope: networkRG
   params: {
@@ -151,9 +151,9 @@ module firewall './modules/firewall/firewall.bicep' = {
     aksSubnetRange: aksAddressRange
     jumpVMAddressRange: [managementSubnetAddressPrefix]
   }
-}
+}*/
 
-module routeTable './modules/routeTable/routeTable.bicep' = {
+/*module routeTable './modules/routeTable/routeTable.bicep' = {
   name: 'routeTable'
   scope: networkRG
   dependsOn: [firewall]
@@ -164,7 +164,7 @@ module routeTable './modules/routeTable/routeTable.bicep' = {
     routeTableName: vmRouteTableName
     vmSubnetAddressPrefix: managementSubnetAddressPrefix
   }
-}
+}*/
 
 module vm './modules/vm/vm.bicep' = {
   name: 'vm'
@@ -212,7 +212,7 @@ module keyVault './modules/keyVault/keyVault.bicep' = {
   }
 }
 
-module applicationGateway './modules/applicationGateway/applicationGateway.bicep' = {
+/*module applicationGateway './modules/applicationGateway/applicationGateway.bicep' = {
     name: applicationGatewayName
     
     scope: networkRG
@@ -225,9 +225,9 @@ module applicationGateway './modules/applicationGateway/applicationGateway.bicep
       appGwSubnetId: vnet.outputs.appGwSubnetID
       availabilityZones: availabilityZones
     }
-}
+}*/
 
-module virtualNetworkGateway './modules/virtualNetworkGateway/virtualNetworkGateway.bicep' = {
+/*module virtualNetworkGateway './modules/virtualNetworkGateway/virtualNetworkGateway.bicep' = {
   name: 'vnetGateway'
   scope: networkRG
   params: {
@@ -239,4 +239,4 @@ module virtualNetworkGateway './modules/virtualNetworkGateway/virtualNetworkGate
     vpnGatewayPublicIPName: vpnGatewayPublicIP
     vpnGatewaySubnetId: vnet.outputs.vpnSubnetID
   }
-}
+}*/
