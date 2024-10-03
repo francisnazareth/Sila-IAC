@@ -1,11 +1,9 @@
 param vnetName string
 param vnetAddressPrefix string
-param fwSubnetAddressPrefix string
+
 param bastionSubnetAddressPrefix string
 param location string = resourceGroup().location
-param appGwSubnetName string
-param appGwSubnetAddressPrefix string
-param vpnSubnetAddressPrefix string
+
 param managementSubnetName string
 param managementSubnetAddressPrefix string
 param sharedServicesSubnetName string
@@ -16,6 +14,22 @@ param tagValues object
 param vmNSGName string 
 param peSubnetName string
 param peSubnetAddressPrefix string
+
+
+param fgIntSubnetAddressPrefix string
+param fgExtSubnetAddressPrefix string
+param fgMgmtSubnetAddressPrefix string
+param fgHASubnetAddressPrefix string 
+
+param paExtSubnetAddressPrefix string
+param paIntSubnetAddressPrefix string
+param paMgmtSubnetAddressPrefix string
+param paHASubnetAddressPrefix string
+
+param f5ExtSubnetAddressPrefix string
+param f5IntSubnetAddressPrefix string
+param f5MgmtSubnetAddressPrefix string
+param f5HASubnetAddressPrefix string
 
 resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2022-05-01' = {
   name: vmNSGName
@@ -52,35 +66,99 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
 
     subnets: [
       {
-        name: 'AzureFirewallSubnet'
+        name: 'snet-FGext-sila-hub-qc-01'
         properties: {
-          addressPrefix: fwSubnetAddressPrefix
+          addressPrefix: fgExtSubnetAddressPrefix
         }
       }
+      {
+        name: 'snet-FGint-sila-hub-qc-01'
+        properties: {
+          addressPrefix: fgIntSubnetAddressPrefix
+        }
+      }
+      {
+        name: 'snet-FGmgmt-sila-hub-qc-01'
+        properties: {
+          addressPrefix: fgMgmtSubnetAddressPrefix
+        }
+      }
+      {
+        name: 'snet-FGHA-sila-hub-qc-01'
+        properties: {
+          addressPrefix: fgHASubnetAddressPrefix
+        }
+      }
+
+
+      {
+        name: 'snet-PAext-sila-hub-qc-01'
+        properties: {
+          addressPrefix: paExtSubnetAddressPrefix
+        }
+      }
+      {
+        name: 'snet-PAint-sila-hub-qc-01'
+        properties: {
+          addressPrefix: paIntSubnetAddressPrefix
+        }
+      }
+      {
+        name: 'snet-PAmgmt-sila-hub-qc-01'
+        properties: {
+          addressPrefix: paMgmtSubnetAddressPrefix
+        }
+      }
+      {
+        name: 'snet-PAHA-sila-hub-qc-01'
+        properties: {
+          addressPrefix: paHASubnetAddressPrefix
+        }
+      }
+
+      {
+        name: 'snet-F5ext-sila-hub-qc-01'
+        properties: {
+          addressPrefix: f5ExtSubnetAddressPrefix
+        }
+      }
+      {
+        name: 'snet-F5int-sila-hub-qc-01'
+        properties: {
+          addressPrefix: f5IntSubnetAddressPrefix
+        }
+      }
+      {
+        name: 'snet-F5mgmt-sila-hub-qc-01'
+        properties: {
+          addressPrefix: f5MgmtSubnetAddressPrefix
+        }
+      }
+      {
+        name: 'snet-F5HA-sila-hub-qc-01'
+        properties: {
+          addressPrefix: f5HASubnetAddressPrefix
+        }
+      }
+
+
+
+
+
       {
         name: 'AzureBastionSubnet'
         properties: {
           addressPrefix: bastionSubnetAddressPrefix
         }
       }      
-      {
-        name: 'GatewaySubnet'
-        properties: {
-          addressPrefix: vpnSubnetAddressPrefix
-        }
-      }
+    
       {
         name: peSubnetName
         properties: {
           addressPrefix: peSubnetAddressPrefix
         }
       }
-      {
-        name: appGwSubnetName
-        properties: {
-          addressPrefix: appGwSubnetAddressPrefix
-        }
-      }
+   
       {
         name: managementSubnetName
         properties: {
@@ -104,20 +182,8 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
     }
   }
 
-  resource firewallSubnet 'subnets' existing = {
-      name: 'AzureFirewallSubnet'
-  }
-
   resource bastionSubnet 'subnets' existing = {
       name: 'AzureBastionSubnet'
-  }
-
-  resource vpnSubnet 'subnets' existing = {
-      name: 'GatewaySubnet'
-  }
-
-  resource appGwSubnet 'subnets' existing = {
-      name: appGwSubnetName
   }
 
   resource managementSubnet 'subnets' existing = {
@@ -130,9 +196,6 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
 }
 
 output vnetId string = vnet.id
-output firewallSubnetID string = vnet::firewallSubnet.id
 output bastionSubnetID string = vnet::bastionSubnet.id
-output vpnSubnetID string = vnet::vpnSubnet.id
-output appGwSubnetID string = vnet::appGwSubnet.id
 output managementSubnetID string = vnet::managementSubnet.id
 output sharedServicesSubnetID string = vnet::sharedServicesSubnet.id

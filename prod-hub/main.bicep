@@ -3,13 +3,10 @@ targetScope = 'subscription'
 param location string = 'qatarcentral'
 param vnetName string
 param vnetAddressPrefix string
-param fwSubnetAddressPrefix string
 param bastionSubnetAddressPrefix string
-param vpnSubnetAddressPrefix string
 param peSubnetName string
 param peSubnetAddressPrefix string 
-param appGwSubnetName string
-param appGwSubnetAddressPrefix string
+
 param managementSubnetName string
 param managementSubnetAddressPrefix string
 param sharedServicesSubnetName string
@@ -24,9 +21,7 @@ param logAnalyticsSku string
 param ddosProtectionPlanName string 
 @description('Enable DDoS protection plan.')
 param ddosProtectionPlanEnabled bool 
-param firewallPublicIPName string 
-param firewallPolicyName string 
-param firewallName string 
+
 param availabilityZones array 
 param vmName string
 param vmSize string
@@ -42,14 +37,7 @@ param recoveryServiceVaultName string
 param managedIdentityName string
 param keyVaultName string 
 param keyVaultSKU string 
-param applicationGatewayName string 
-param applicationGatewayPublicIPName string 
-param appGatewayWAFPolicyName string
-param vpnGatewayName string 
-param vpnGatewayPublicIP string 
-param vpnGatewayTier string
-param vmRouteTableName string 
-param aksAddressRange array = ['10.0.4.0/23', '10.0.6.0/27', '10.0.7.0/24', '10.0.6.32/27']
+
 
 resource backupRG 'Microsoft.Resources/resourceGroups@2022-09-01' = {
   name: backupRGName
@@ -86,6 +74,21 @@ module ddosProtectionPlan 'modules/ddos/ddos.bicep' = {
   }
 }
 
+param fgIntSubnetAddressPrefix string
+param fgExtSubnetAddressPrefix string
+param fgMgmtSubnetAddressPrefix string
+param fgHASubnetAddressPrefix string 
+
+param paExtSubnetAddressPrefix string
+param paIntSubnetAddressPrefix string
+param paMgmtSubnetAddressPrefix string
+param paHASubnetAddressPrefix string
+
+param f5ExtSubnetAddressPrefix string
+param f5IntSubnetAddressPrefix string
+param f5MgmtSubnetAddressPrefix string
+param f5HASubnetAddressPrefix string
+
 module vnet './modules/vnet/vnet.bicep' = {
   name: 'vnet'
   scope: networkRG
@@ -93,13 +96,25 @@ module vnet './modules/vnet/vnet.bicep' = {
     vnetName: vnetName
     location: location
     vnetAddressPrefix: vnetAddressPrefix
-    fwSubnetAddressPrefix: fwSubnetAddressPrefix
+
+    fgIntSubnetAddressPrefix: fgIntSubnetAddressPrefix
+    fgExtSubnetAddressPrefix: fgExtSubnetAddressPrefix
+    fgMgmtSubnetAddressPrefix: fgMgmtSubnetAddressPrefix
+    fgHASubnetAddressPrefix: fgHASubnetAddressPrefix 
+    
+    paExtSubnetAddressPrefix: paExtSubnetAddressPrefix
+    paIntSubnetAddressPrefix: paIntSubnetAddressPrefix
+    paMgmtSubnetAddressPrefix: paMgmtSubnetAddressPrefix
+    paHASubnetAddressPrefix: paHASubnetAddressPrefix
+    
+    f5ExtSubnetAddressPrefix: f5ExtSubnetAddressPrefix
+    f5IntSubnetAddressPrefix: f5IntSubnetAddressPrefix
+    f5MgmtSubnetAddressPrefix: f5MgmtSubnetAddressPrefix
+    f5HASubnetAddressPrefix: f5HASubnetAddressPrefix
+
     bastionSubnetAddressPrefix: bastionSubnetAddressPrefix
-    vpnSubnetAddressPrefix: vpnSubnetAddressPrefix
     peSubnetName: peSubnetName
     peSubnetAddressPrefix: peSubnetAddressPrefix
-    appGwSubnetName: appGwSubnetName
-    appGwSubnetAddressPrefix: appGwSubnetAddressPrefix
     managementSubnetName: managementSubnetName
     managementSubnetAddressPrefix: managementSubnetAddressPrefix
     sharedServicesSubnetName: sharedServicesSubnetName
@@ -137,21 +152,7 @@ module logAnalytics './modules/logAnalytics/logAnalytics.bicep' = {
   }
 }
 
-/*module firewall './modules/firewall/firewall.bicep' = {
-  name: 'firewall'
-  scope: networkRG
-  params: {
-    location: location
-    tagValues: tagValues
-    firewallSubnetID: vnet.outputs.firewallSubnetID
-    firewallPublicIPName: firewallPublicIPName
-    firewallPolicyName: firewallPolicyName
-    firewallName: firewallName
-    availabilityZones: availabilityZones
-    aksSubnetRange: aksAddressRange
-    jumpVMAddressRange: [managementSubnetAddressPrefix]
-  }
-}*/
+
 
 /*module routeTable './modules/routeTable/routeTable.bicep' = {
   name: 'routeTable'
@@ -212,31 +213,3 @@ module keyVault './modules/keyVault/keyVault.bicep' = {
   }
 }
 
-/*module applicationGateway './modules/applicationGateway/applicationGateway.bicep' = {
-    name: applicationGatewayName
-    
-    scope: networkRG
-    params: {
-      location: location 
-      tagValues: tagValues
-      applicationGatewayName: applicationGatewayName
-      appGatewayWAFPolicyName: appGatewayWAFPolicyName
-      appGwPublicIPName: applicationGatewayPublicIPName
-      appGwSubnetId: vnet.outputs.appGwSubnetID
-      availabilityZones: availabilityZones
-    }
-}*/
-
-/*module virtualNetworkGateway './modules/virtualNetworkGateway/virtualNetworkGateway.bicep' = {
-  name: 'vnetGateway'
-  scope: networkRG
-  params: {
-    location: location
-    tagValues: tagValues
-    availabilityZones: availabilityZones
-    vpnGatewayName: vpnGatewayName
-    vpnGatewayTier: vpnGatewayTier
-    vpnGatewayPublicIPName: vpnGatewayPublicIP
-    vpnGatewaySubnetId: vnet.outputs.vpnSubnetID
-  }
-}*/
